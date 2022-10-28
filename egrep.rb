@@ -34,6 +34,7 @@ class EGREP
 
   end
 
+  # コマンドライン引数よりファイル名を取得
   def filename_extraction(argv)
     _err = nil
     filename = nil
@@ -45,6 +46,7 @@ class EGREP
     return _err, filename
   end
 
+  # コマンドライン引数より正規表現を取得
   def regexp_extraction(argv)
     _err = nil
     regexp = nil
@@ -56,6 +58,7 @@ class EGREP
     return _err, regexp
   end
 
+  # ファイルを読み込み
   def file_loading(filename)
     _err = nil
     file = nil
@@ -68,6 +71,7 @@ class EGREP
     return _err, file
   end
 
+  # ファイルから正規表現に一致する行を検索
   def search(file, regexp)
     matched_array = []
     print file.path, "ファイルより、正規表現(/", regexp.source, "/)を実行します。\n"
@@ -84,3 +88,25 @@ class EGREP
 end
 
 EGREP.new
+
+
+## 実行結果
+
+## 正常動作
+# $ ruby egrep.rb aA words
+# wordsファイルより、正規表現(/aA/)を実行します。
+# aA
+# aAa
+# aAaA
+# aAaAa
+# aAaAaA
+# aAaAaAa
+
+
+## 存在しないファイル指定
+# $ ruby egrep.rb aA abc
+# No such file or directory @ rb_sysopen - abc
+
+## 正規表現が不正
+# $ ruby egrep.rb 'a(' words
+# end pattern with unmatched parenthesis: /a(/
